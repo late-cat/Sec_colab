@@ -85,6 +85,6 @@ if st.button("🔮 Predict Churn", type="primary", use_container_width=True):
     # Show results
     st.subheader(f"Prediction Result ({model_choice}):")
     if prediction_prob >= 0.5:
-        st.error(f"🔴 High Risk of Churn! (Probability: {prediction_prob:.1%})")
+        st.error(f"🚩 High Risk of Churn! (Probability: {prediction_prob:.1%})")
     else:
-        st.success(f"🟢 Customer is Safe to stay. (Probability: {prediction_prob:.1%})")
+        st.success(f"❇️ Customer is Safe to stay. (Probability: {prediction_prob:.1%})")
