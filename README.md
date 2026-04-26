@@ -25,5 +25,7 @@ The data I used to train the model is the "Customer Churn Dataset" from Kaggle. 
 - `Untitled.ipynb`: My Jupyter Notebook where I did the data exploration, preprocessing, and model training.
 - `model-CNN.keras` & `rf_model.pkl`: The trained models used for making predictions.
 - `scaler.pkl`: The scaler used to normalize the input data so the model can understand it properly.
+- ## ⚙️ App Maintenance
+- **Keeping the App Awake:** Since Streamlit Community Cloud apps go to sleep after periods of inactivity, I've set up **UptimeRobot** to ping the app every 5 minutes. This ensures the dashboard is always live and ready!
   
 -*readme formatted using GPT*
