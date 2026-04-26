@@ -25,5 +25,5 @@ The data I used to train the model is the "Customer Churn Dataset" from Kaggle. 
 - `Untitled.ipynb`: My Jupyter Notebook where I did the data exploration, preprocessing, and model training.
 - `model-CNN.keras` & `rf_model.pkl`: The trained models used for making predictions.
 - `scaler.pkl`: The scaler used to normalize the input data so the model can understand it properly.
-
--##readme formatted using GPT
+  
+-*readme formatted using GPT*
