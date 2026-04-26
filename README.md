@@ -1,4 +1,4 @@
-# Customer Churn Prediction Project 🚀
+# Customer Churn Prediction Project 🛃
 
 Hey there! Welcome to my Customer Churn Prediction project. This is the second project I've built and deployed in Google Colab using python and streamlit.
 
