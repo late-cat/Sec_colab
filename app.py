@@ -1,42 +1,35 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import pickle
+import joblib
 from tensorflow.keras.models import load_model
 
-# Load the saved models and scaler
 @st.cache_resource
 def load_assets():
-    with open('models/previous-models/rf_model.pkl', 'rb') as f:
-        rf_model = pickle.load(f)
+    rf_model = joblib.load('models/optimized-models/final_model.joblib')
+    scaler = joblib.load('models/optimized-models/scaler.joblib')
     
     ann_model = load_model('models/previous-models/model-CNN.keras')
-    
-    with open('models/previous-models/scaler.pkl', 'rb') as f:
-        scaler = pickle.load(f)
         
     return rf_model, ann_model, scaler
 
 rf_model, ann_model, scaler = load_assets()
 
-# Set up the UI
 st.set_page_config(page_title="Customer Churn Predictor", page_icon="🏦", layout="centered")
 st.title("🏦 Customer Churn Predictor")
 st.markdown("Predict whether a customer is likely to leave the bank based on their profile.")
 st.divider()
 
-# Model Selection
 model_choice = st.selectbox("🤖 Select Prediction Model", ["Random Forest", "Artificial Neural Network (ANN)"])
 
 
 if model_choice == "Random Forest":
-    st.info("**Model Stats:** Accuracy: ~86% | Type: Ensemble Learning | Fast & Interpretable")
+    st.info("**Model Stats:** Optimized with SMOTE & Hyperparameter Tuning | Type: Ensemble Learning | High Reliability")
 else:
     st.info("**Model Stats:** Accuracy: ~85.7% | Type: Deep Learning | Architecture: 3 Hidden Layers")
 
 st.divider()
 
-# Input fields
 col1, col2 = st.columns(2)
 
 with col1:
@@ -55,34 +48,26 @@ with col2:
 
 st.divider()
 
-# Prediction logic
 if st.button("🔮 Predict Churn", type="primary", use_container_width=True):
-    # Process categorical inputs
     geo_germany = 1 if geography == "Germany" else 0
     geo_spain = 1 if geography == "Spain" else 0
     gender_male = 1 if gender == "Male" else 0
     cr_card = 1 if has_cr_card else 0
     active_member = 1 if is_active else 0
 
-    # Create input array
     user_input = np.array([[
         credit_score, age, tenure, balance, num_products, 
         cr_card, active_member, estimated_salary, 
         geo_germany, geo_spain, gender_male
     ]])
 
-    # Scale the input
     scaled_input = scaler.transform(user_input)
 
-    # Predict
     if model_choice == "Random Forest":
-        # predict_proba returns an array like [[prob_stay, prob_churn]]
         prediction_prob = rf_model.predict_proba(scaled_input)[0][1]
     else:
-        # ANN predict returns a single probability scalar
         prediction_prob = ann_model.predict(scaled_input, verbose=0)[0][0]
 
-    # Show results
     st.subheader(f"Prediction Result ({model_choice}):")
     if prediction_prob >= 0.5:
         st.error(f"🚩 High Risk of Churn! (Probability: {prediction_prob:.1%})")
