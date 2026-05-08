@@ -7,12 +7,12 @@ from tensorflow.keras.models import load_model
 # Load the saved models and scaler
 @st.cache_resource
 def load_assets():
-    with open('rf_model.pkl', 'rb') as f:
+    with open('models/previous-models/rf_model.pkl', 'rb') as f:
         rf_model = pickle.load(f)
     
-    ann_model = load_model('model-CNN.keras')
+    ann_model = load_model('models/previous-models/model-CNN.keras')
     
-    with open('scaler.pkl', 'rb') as f:
+    with open('models/previous-models/scaler.pkl', 'rb') as f:
         scaler = pickle.load(f)
         
     return rf_model, ann_model, scaler
